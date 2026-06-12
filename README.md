@@ -53,6 +53,9 @@ URL is quoted. To paste links bare, add this to `~/.zshrc`:
 alias spaces-dl="noglob spaces-dl"
 ```
 
+Then run `source ~/.zshrc` in any terminal that was already open (new windows
+pick it up automatically). `type spaces-dl` should report it's an alias.
+
 ## Notes
 
 - Only works for Spaces whose host enabled recording (and hasn't deleted the
