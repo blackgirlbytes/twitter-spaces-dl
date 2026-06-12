@@ -30,6 +30,9 @@ spaces-dl https://x.com/i/spaces/1dRJZEpyjlNGB
 MP3s land in `~/Documents/work/spaces` named `Title [host] YYYY-MM-DD.mp3`.
 
 ```bash
+# pick your own filename instead of the Space title
+spaces-dl -n "design review june" <url>     # -> design review june.mp3
+
 # several at once
 spaces-dl <url1> <url2> <url3>
 

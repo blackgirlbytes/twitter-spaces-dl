@@ -61,6 +61,10 @@ def build_parser(config: dict) -> argparse.ArgumentParser:
         help=f"where to put MP3s (default: {config['output_dir']})",
     )
     parser.add_argument(
+        "-n", "--name",
+        help='save the MP3 under this name instead of the Space title, e.g. -n "team standup" (single URL only)',
+    )
+    parser.add_argument(
         "-b", "--browser",
         default=config["browser"],
         choices=SUPPORTED_BROWSERS,
@@ -79,11 +83,19 @@ def build_parser(config: dict) -> argparse.ArgumentParser:
     return parser
 
 
-def download(urls: list[str], output_dir: Path, browser: str, verbose: bool) -> list[str]:
+def download(
+    urls: list[str], output_dir: Path, browser: str, verbose: bool, name: str | None = None
+) -> list[str]:
     """Download each URL as an MP3 into output_dir. Returns the URLs that failed."""
+    if name:
+        stem = name.removesuffix(".mp3")
+        # % is yt-dlp template syntax; escape any in the user's name
+        outtmpl = stem.replace("%", "%%") + ".%(ext)s"
+    else:
+        outtmpl = "%(title)s [%(uploader)s] %(upload_date>%Y-%m-%d|undated)s.%(ext)s"
     ydl_opts = {
         "format": "bestaudio/best",
-        "outtmpl": str(output_dir / "%(title)s [%(uploader)s] %(upload_date>%Y-%m-%d|undated)s.%(ext)s"),
+        "outtmpl": str(output_dir / outtmpl),
         "cookiesfrombrowser": (browser,),
         "postprocessors": [
             {
@@ -114,7 +126,11 @@ def download(urls: list[str], output_dir: Path, browser: str, verbose: bool) -> 
 
 def main() -> None:
     config = load_config()
-    args = build_parser(config).parse_args()
+    parser = build_parser(config)
+    args = parser.parse_args()
+
+    if args.name and len(args.urls) > 1:
+        parser.error("--name only works with a single URL (the files would overwrite each other)")
 
     if shutil.which("ffmpeg") is None:
         sys.exit(
@@ -128,7 +144,7 @@ def main() -> None:
     output_dir = Path(args.output_dir).expanduser()
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    failed = download(args.urls, output_dir, args.browser, args.verbose)
+    failed = download(args.urls, output_dir, args.browser, args.verbose, args.name)
 
     done = len(args.urls) - len(failed)
     if done:
