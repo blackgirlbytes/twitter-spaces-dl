@@ -1,0 +1,17 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "twitter-spaces-dl"
+version = "0.1.0"
+description = "Download recorded Twitter/X Spaces as MP3s"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["yt-dlp"]
+
+[project.scripts]
+spaces-dl = "spaces_dl.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/spaces_dl"]
