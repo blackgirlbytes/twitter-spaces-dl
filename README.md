@@ -27,7 +27,7 @@ auth for Space replays), then:
 spaces-dl https://x.com/i/spaces/1dRJZEpyjlNGB
 ```
 
-MP3s land in `~/Music/spaces` named `Title [host] YYYY-MM-DD.mp3`.
+MP3s land in `~/Documents/work/spaces` named `Title [host] YYYY-MM-DD.mp3`.
 
 ```bash
 # several at once

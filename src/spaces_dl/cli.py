@@ -16,7 +16,7 @@ from yt_dlp.utils import DownloadError
 CONFIG_PATH = Path.home() / ".config" / "spaces-dl" / "config.json"
 
 DEFAULTS = {
-    "output_dir": str(Path.home() / "Music" / "spaces"),
+    "output_dir": str(Path.home() / "Documents" / "work" / "spaces"),
     "browser": "chrome",
 }
 
