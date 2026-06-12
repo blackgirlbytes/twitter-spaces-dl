@@ -45,6 +45,14 @@ spaces-dl -v <url>
 
 Config lives at `~/.config/spaces-dl/config.json`.
 
+Copied Space links often end in `?s=20` (X's share tracking — harmless), but
+zsh treats the `?` as a wildcard and errors with `no matches found` unless the
+URL is quoted. To paste links bare, add this to `~/.zshrc`:
+
+```bash
+alias spaces-dl="noglob spaces-dl"
+```
+
 ## Notes
 
 - Only works for Spaces whose host enabled recording (and hasn't deleted the
