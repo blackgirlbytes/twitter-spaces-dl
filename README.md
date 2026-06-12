@@ -9,7 +9,7 @@ Requires [uv](https://docs.astral.sh/uv/) (or pipx) and ffmpeg:
 
 ```bash
 brew install uv ffmpeg
-uv tool install git+https://github.com/YOUR_USERNAME/twitter-spaces-dl
+uv tool install git+https://github.com/blackgirlbytes/twitter-spaces-dl
 ```
 
 To update later (picks up both your pushes and new yt-dlp releases):
